@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "276864769557",
+    "firebase_url": "https://fcmjava-e18ba.firebaseio.com",
+    "project_id": "fcmjava-e18ba",
+    "storage_bucket": "fcmjava-e18ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:276864769557:android:4d866e623b93d20f",
+        "android_client_info": {
+          "package_name": "com.shantanu.example.fcmjava"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "276864769557-pduqa0ip9e23195ib728bj8k6e6o5fn2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcwVlQcDq27H1hZUCz9dEPyNUFIt9bWMg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
