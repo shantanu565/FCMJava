@@ -17,8 +17,13 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -50,34 +55,24 @@ public class MyService extends FirebaseMessagingService {
         final String message = remoteMessage.getData().get("message");
         final String imageUri = remoteMessage.getData().get("image");
 
-
-        Glide.with(getApplicationContext())
+        RequestBuilder<Bitmap> requestBuilder = Glide.with(getApplicationContext())
                 .asBitmap()
-                .load(imageUri)
-                .into(new CustomTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        builder = new NotificationCompat.Builder(getApplicationContext())
-                                .setSmallIcon(R.mipmap.ic_launcher_round)
-                                .setContentTitle("My notification")
-                                .setContentText("Hello World")
-                                .setContentIntent(pendingIntent)
-                                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(resource))
-                                .setAutoCancel(true)
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .load(imageUri);
+        requestBuilder.addListener(new RequestListener<Bitmap>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                func(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), resource, message, imageUri);
+
+                return isFirstResource;
+            }
+        });
 
 
-                        func(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), bitmap, message, imageUri);
-                        Log.d("msg", message + imageUri);
-                    }
-
-                    @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
-
-                    }
-
-
-                });
     }
     //here
 
@@ -88,7 +83,7 @@ public class MyService extends FirebaseMessagingService {
         bundle.putString("imageUri",url);
         bundle.putString("message",msg);
         i.putExtras(bundle);
-        PendingIntent pendingIntent=PendingIntent.getActivity(getApplicationContext(),1,i,PendingIntent.FLAG_ONE_SHOT);
+        pendingIntent=PendingIntent.getActivity(getApplicationContext(),1,i,PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -99,10 +94,11 @@ public class MyService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setLargeIcon(bitmap)
+                .setChannelId("com.shantanu.example.fcmjava.stopwatchID")
                 .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap));
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-        notificationManager.notify(101, builder.build());
+        notificationManager.notify(101, notificationBuilder.build());
 
 
     }
