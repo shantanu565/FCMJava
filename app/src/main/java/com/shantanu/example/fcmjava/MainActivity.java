@@ -21,19 +21,20 @@ import com.shantanu.example.fcmjava.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
     NotificationManager manager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        subscribeToPushService();
+        //subscribeToPushService();
 
 
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         NotificationChannel channelStopWatch = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            channelStopWatch = new NotificationChannel("com.shantanu.example.notificationexercise.stopwatchID", "com.shantanu.example.notificationexercise.stopwatchName", NotificationManager.IMPORTANCE_HIGH);
+            channelStopWatch = new NotificationChannel("com.shantanu.example.fcmjava.stopwatchID", "com.shantanu.example.fcmjava.stopwatchName", NotificationManager.IMPORTANCE_HIGH);
             channelStopWatch.enableVibration(true);
             manager.createNotificationChannel(channelStopWatch);
 
@@ -45,10 +46,17 @@ public class MainActivity extends AppCompatActivity {
                 notificationStopwatch();
             }
         });
+        binding.btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,DetailActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void notificationStopwatch() {
-        NotificationCompat.Builder notiOne = new NotificationCompat.Builder(getApplicationContext(), "com.shantanu.example.notificationexercise.stopwatchID")
+        NotificationCompat.Builder notiOne = new NotificationCompat.Builder(getApplicationContext(), "com.shantanu.example.fcmjava.stopwatchID")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Stopwatch Notice")
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})

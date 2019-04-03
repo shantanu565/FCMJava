@@ -25,8 +25,8 @@ public class DetailActivity extends AppCompatActivity {
         binding.setNoti(noti);
         Bundle bundle=getIntent().getExtras();
         if (bundle!=null){
-            noti.setUrl(bundle.getString("imgUrl"));
-            noti.setPrice(bundle.getString("price"));
+            noti.setUrl(bundle.getString("imageUri"));
+            noti.setPrice(bundle.getString("message"));
         }
 
 

@@ -9,7 +9,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.platforminfo.UserAgentPublisher;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
-    private static final String TAG = "MyFirebaseIIDService";
+    private static final String TAG ="MyFirebaseIIDService";
 
     @Override
     public void onTokenRefresh() {
