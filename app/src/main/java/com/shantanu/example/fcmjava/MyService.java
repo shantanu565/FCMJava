@@ -70,7 +70,34 @@ public class MyService extends FirebaseMessagingService {
 
                 return isFirstResource;
             }
-        });
+
+
+        })
+
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+
+                        builder = new NotificationCompat.Builder(getApplicationContext())
+                                .setSmallIcon(R.mipmap.ic_launcher_round)
+                                .setContentTitle("My notification")
+                                .setContentText("Hello World")
+                                .setContentIntent(pendingIntent)
+                                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(resource))
+                                .setAutoCancel(true)
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                     // func(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), bitmap, message, imageUri);
+                        Log.d("msg", message + imageUri);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                    }
+
+
+                });
 
 
     }
@@ -83,7 +110,7 @@ public class MyService extends FirebaseMessagingService {
         bundle.putString("imageUri",url);
         bundle.putString("message",msg);
         i.putExtras(bundle);
-        pendingIntent=PendingIntent.getActivity(getApplicationContext(),1,i,PendingIntent.FLAG_ONE_SHOT);
+        pendingIntent=PendingIntent.getActivity(getApplicationContext(),1,i,PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -94,6 +121,7 @@ public class MyService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setLargeIcon(bitmap)
+                .setContentIntent(pendingIntent)
                 .setChannelId("com.shantanu.example.fcmjava.stopwatchID")
                 .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap));
 

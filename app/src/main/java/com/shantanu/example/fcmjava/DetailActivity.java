@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.shantanu.example.fcmjava.databinding.ActivityDetailBinding;
@@ -25,17 +26,15 @@ public class DetailActivity extends AppCompatActivity {
 
         imageView=findViewById(R.id.imgItem);
         textView=findViewById(R.id.tvPrice);
+        Toast.makeText(this,"hello",Toast.LENGTH_SHORT).show();
 
-        noti= ViewModelProviders.of(this).get(Noti.class);
-        ActivityDetailBinding binding= DataBindingUtil.setContentView(this,R.layout.activity_detail);
-        binding.setNoti(noti);
         Bundle bundle=getIntent().getExtras();
         if (bundle!=null){
             noti.setUrl(bundle.getString("imageUri"));
             noti.setPrice(bundle.getString("message"));
 
             textView.setText(bundle.get("message").toString());
-            Glide.with(this).load(bundle.get("imageUri")).into(imageView);
+            Glide.with(this).load("https://homepages.cae.wisc.edu/~ece533/images/airplane.png").into(imageView);
         }
 
 

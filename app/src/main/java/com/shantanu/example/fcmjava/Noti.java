@@ -27,11 +27,4 @@ public class Noti extends ViewModel {
     }
 
 
-    @BindingAdapter("bind:imageSrc")
-    public static void LoadImage(ImageView view, String image_url){
-        Glide.with(view.getContext())
-                .load(image_url)
-                .into(view);
-    }
-
 }

@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
         //subscribeToPushService();
 
-
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         NotificationChannel channelStopWatch = null;
@@ -66,13 +65,6 @@ public class MainActivity extends AppCompatActivity {
         notiOne.setSound(alarm);
 
         manager.notify(1, notiOne.build());
-
-        final Handler handler1 = new Handler();
-        handler1.postDelayed(new Runnable() {
-            public void run() {
-                handler1.postDelayed(this, 60000);
-            }
-        }, 120000);
     }
 
     private void subscribeToPushService() {
